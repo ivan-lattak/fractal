@@ -1,6 +1,7 @@
 #ifndef FRACTAL_PARSER_H
 #define FRACTAL_PARSER_H
 
+#include <istream>
 #include <string>
 
 #include <mpfr.h>
@@ -12,12 +13,13 @@ namespace fractal {
     class parser {
     
     public:
-        parser(const char*);
+        parser(const std::string&, std::istream&);
 
-        bool read(std::string&, mpfr_t&, mpfr_t&, mpfr_t&, unsigned int&) const;
+        bool get_params(std::string&, mpfr_t&, mpfr_t&, mpfr_t&, unsigned int&) const;
 
     private:
         const std::string mExecutableName;
+        std::istream& mInputStream;
 
         bool parse_first_line(std::string&) const;
         void parse_line(std::string&) const;

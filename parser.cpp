@@ -1,5 +1,5 @@
-#include <iostream>
-#include <sstream>
+#include <istream>
+#include <isstream>
 #include <string>
 
 #include <mpfr.h>
@@ -8,13 +8,16 @@
 
 namespace fractal {
 
-    parser::parser(const char* pExecutableName) : mExecutableName(pExecutableName) { }
+    parser::parser(const std::string& pExecutableName,
+                   std::istream& pInputStream) :
+            mExecutableName(pExecutableName),
+            mInputStream(pInpuStream) { }
 
-    bool parser::read(std::string& pOutputFile, 
-                      mpfr_t& pXCenter, 
-                      mpfr_t& pYCenter, 
-                      mpfr_t& pWidth, 
-                      unsigned int& pMaxIters) const {
+    bool parser::get_params(std::string& pOutputFile,
+                            mpfr_t& pXCenter,
+                            mpfr_t& pYCenter,
+                            mpfr_t& pWidth,
+                            unsigned int& pMaxIters) const {
         std::string line;
         std::istringstream lineStream;
         std::string xCenter, yCenter, width;

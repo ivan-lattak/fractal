@@ -7,20 +7,16 @@
 
 #include "parser.h"
 
-#define FILENAME_SIZE (1 << 16)
-
-const mpfr_prec_t DEFAULT_PREC = 256;
-
 int main(int argc, const char** argv) {
     try {
-        const char* executableName = argc > 0 ? argv[0] : "";
-        fractal::parser parser(executableName);
+        std::string executableName(argc > 0 ? argv[0] : "");
+        fractal::parser parser(executableName, std::cin);
 
         std::string outputFile;
         mpfr_t xCenter, yCenter, width;
         unsigned int maxIters;
 
-        while (parser.read(outputFile, xCenter, yCenter, width, maxIters)) {
+        while (parser.get_params(outputFile, xCenter, yCenter, width, maxIters)) {
             std::cerr << "outputFile = \"" << outputFile << "\"\n";
             std::cerr << "xCenter = \"" << mpfr_get_d(xCenter, MPFR_RNDN) << "\"\n";
             std::cerr << "yCenter = \"" << mpfr_get_d(yCenter, MPFR_RNDN) << "\"\n";
